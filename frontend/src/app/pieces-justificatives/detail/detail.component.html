@@ -1,0 +1,41 @@
+<button type="button" (click)="fermer.emit()">← Retour à la liste</button>
+
+@if (erreur() !== null) {
+  <p role="alert" class="message-etat message-etat--alerte">
+    Une erreur est survenue pendant le chargement du détail de cette pièce
+    justificative.
+  </p>
+} @else if (detail() === null) {
+  <p class="message-etat message-etat--neutre">Chargement…</p>
+} @else {
+  <h2>{{ detail()!.reference }}</h2>
+  <p>{{ detail()!.libelle }}</p>
+  <p>
+    Statut courant :
+    <span class="badge badge--{{ categorieStatut(detail()!.statut) }}">
+      {{ libelleStatut[detail()!.statut] }}
+    </span>
+  </p>
+
+  <h3>Historique</h3>
+  @if (detail()!.historique.length === 0) {
+    <p class="message-etat message-etat--neutre">
+      Aucun changement de statut enregistré pour cette pièce justificative.
+    </p>
+  } @else {
+    <ul>
+      @for (entree of detail()!.historique; track entree.date + entree.statut) {
+        <li>
+          {{ entree.date }} —
+          <span class="badge badge--{{ categorieStatut(entree.statut) }}">
+            {{ libelleStatut[entree.statut] }}
+          </span>
+          — {{ entree.auteur }}
+          @if (entree.motif) {
+            <span> — motif : {{ entree.motif }}</span>
+          }
+        </li>
+      }
+    </ul>
+  }
+}

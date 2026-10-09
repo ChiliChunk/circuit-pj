@@ -1,0 +1,13 @@
+<fieldset class="filtre-statut">
+  <legend>Filtrer par statut</legend>
+  @for (statut of statuts; track statut) {
+    <label class="filtre-statut__option">
+      <input
+        type="checkbox"
+        [checked]="estSelectionne(statut)"
+        (change)="basculer(statut, $any($event.target).checked)"
+      />
+      {{ libelle[statut] }}
+    </label>
+  }
+</fieldset>

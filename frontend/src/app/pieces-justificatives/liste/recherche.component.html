@@ -1,0 +1,8 @@
+<label for="recherche-pj">Rechercher une pièce justificative (référence ou libellé)</label>
+<input
+  id="recherche-pj"
+  type="search"
+  autocomplete="off"
+  [value]="texte()"
+  (input)="onSaisie($event)"
+/>

@@ -1,0 +1,215 @@
+/* Jetons de présentation (plan, section 4 : D1 couleurs, D4 statuts, D2 typographie) */
+:root {
+  --couleur-primaire: #1f4e8c;
+  --couleur-succes: #1b7852;
+  --couleur-avertissement: #f3a209;
+  --couleur-danger: #ca1d34;
+  --couleur-neutre: #e0e0e0;
+
+  --fond-primaire: #dbe7f6;
+  --fond-succes: #c5ead8;
+  --fond-avertissement: #ffdeb2;
+  --fond-info: #ededed;
+  --fond-danger: #fbdde1;
+
+  --famille-police: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+
+  --texte-principal: #1a1a1a;
+  --texte-secondaire: #4a4a4a;
+  --bordure: #d0d0d0;
+}
+
+/* Base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--famille-police);
+  color: var(--texte-principal);
+  background: #fafafa;
+}
+
+/* Hiérarchie typographique (CA2.1) */
+h1 {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+h2 {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 24px 0 8px;
+}
+h3 {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 16px 0 8px;
+}
+th {
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--texte-secondaire);
+}
+td {
+  font-size: 16px;
+}
+
+/* En-tête de l'application (T002) */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  border-bottom: 2px solid var(--couleur-primaire);
+  background: #ffffff;
+}
+.app-header__logo {
+  height: 32px;
+  width: auto;
+}
+.app-header__titre {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--couleur-primaire);
+}
+
+main {
+  padding: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* Contrôles cohérents (CA3.1) */
+button {
+  font-family: var(--famille-police);
+  font-size: 14px;
+  padding: 8px 16px;
+  border: 1px solid var(--couleur-primaire);
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--couleur-primaire);
+  cursor: pointer;
+}
+button:hover {
+  background: var(--fond-primaire);
+}
+
+input[type='search'],
+input[type='text'] {
+  font-family: var(--famille-police);
+  font-size: 14px;
+  padding: 8px 12px;
+  border: 1px solid var(--bordure);
+  border-radius: 4px;
+}
+
+input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--couleur-primaire);
+}
+
+/* États interactifs cohérents (CA3.2) */
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--couleur-primaire);
+  outline-offset: 2px;
+}
+
+/* Filtre par statut */
+fieldset.filtre-statut {
+  border: 1px solid var(--bordure);
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 12px 16px;
+  margin: 0 0 16px;
+}
+.filtre-statut__option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+/* Tableau de la liste — espacement et séparation (CA2.2) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+th,
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--bordure);
+}
+tbody tr:hover {
+  background: #f5f5f5;
+}
+
+/* Historique du détail — espacement et séparation (CA2.2) */
+ul {
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+}
+li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bordure);
+}
+li:last-child {
+  border-bottom: none;
+}
+
+/* Badge de statut (T010, D4) — le texte reste toujours affiché à côté */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--texte-principal);
+}
+.badge--neutre {
+  background: var(--couleur-neutre);
+}
+.badge--primaire {
+  background: var(--fond-primaire);
+  color: var(--couleur-primaire);
+}
+.badge--succes {
+  background: var(--fond-succes);
+  /* #1B7852 (--couleur-succes) mesuré à 4.19:1 sur ce fond clair, sous le
+     seuil AA (4,5:1) — assombri pour atteindre 5,79:1, même teinte. */
+  color: #166042;
+}
+.badge--info {
+  background: var(--fond-info);
+}
+.badge--avertissement {
+  background: var(--fond-avertissement);
+  color: #7a4c00;
+}
+
+/* Messages d'état (T040) — l'alerte se distingue visuellement du neutre */
+.message-etat {
+  padding: 16px;
+  border-radius: 4px;
+  margin-top: 16px;
+}
+.message-etat--neutre {
+  background: #f0f0f0;
+  color: var(--texte-secondaire);
+}
+.message-etat--alerte {
+  background: var(--fond-danger);
+  /* #CA1D34 (--couleur-danger) mesuré à 4.42:1 sur ce fond clair, sous le
+     seuil AA (4,5:1) — assombri pour atteindre 6,14:1, même teinte. */
+  color: #a2172a;
+  border: 1px solid var(--couleur-danger);
+  font-weight: 500;
+}

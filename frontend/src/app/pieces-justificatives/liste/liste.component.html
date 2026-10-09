@@ -1,0 +1,72 @@
+@if (erreur()?.type === 'habilitation') {
+  <p role="alert" class="message-etat message-etat--alerte">
+    Accès refusé : vous ne disposez pas de l'habilitation « Consultation des
+    circuits de validation PJ ».
+  </p>
+} @else if (erreur() !== null) {
+  <p role="alert" class="message-etat message-etat--alerte">
+    Une erreur est survenue pendant le chargement des pièces justificatives.
+    <button type="button" (click)="reessayer()">Réessayer</button>
+  </p>
+} @else if (piecesBrutes() === null) {
+  <p class="message-etat message-etat--neutre">Chargement…</p>
+} @else if (referenceOuverte() !== null) {
+  <app-detail-piece-justificative
+    [reference]="referenceOuverte()!"
+    (fermer)="fermerDetail()"
+  />
+} @else {
+  <app-filtre-statut
+    [selection]="statutsFiltres()"
+    (selectionChange)="changerStatutsFiltres($event)"
+  />
+  <app-recherche [texte]="texteRecherche()" (texteChange)="changerTexteRecherche($event)" />
+
+  @if (piecesBrutes()!.length === 0) {
+    <p class="message-etat message-etat--neutre">Aucune pièce justificative.</p>
+  } @else if (piecesAffichees().length === 0) {
+    <p class="message-etat message-etat--neutre">
+      Aucun résultat pour ces critères de filtre ou de recherche.
+    </p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Référence</th>
+          <th scope="col">Libellé</th>
+          <th scope="col">
+            Date de dépôt
+            <button type="button" (click)="basculerSensTri()">
+              Trier ({{ sensTri() === 'croissant' ? 'croissant' : 'décroissant' }})
+            </button>
+          </th>
+          <th scope="col">Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (piece of piecesAffichees(); track piece.reference) {
+          <tr>
+            <td>
+              <button type="button" (click)="ouvrirDetail(piece.reference)">
+                {{ piece.reference }}
+              </button>
+            </td>
+            <td>{{ piece.libelle }}</td>
+            <td>
+              @if (piece.dateDepot === null) {
+                <span>Date de dépôt non renseignée</span>
+              } @else {
+                {{ piece.dateDepot }}
+              }
+            </td>
+            <td>
+              <span class="badge badge--{{ categorieStatut(piece.statut) }}">
+                {{ libelleStatut[piece.statut] }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+}
