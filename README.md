@@ -50,12 +50,12 @@ Le détail de la méthode et l'état du projet sont dans `CLAUDE.md`.
 
 Cycle en quatre phases, chacune relue et validée avant la suivante :
 
-| Phase | Commande     | Produit                      |
-|-------|--------------|------------------------------|
+| Phase | Commande     | Produit                       |
+|-------|--------------|-------------------------------|
 | 1     | `/specify`   | `specs/<NNN>-<slug>/spec.md`  |
 | 2     | `/plan`      | `specs/<NNN>-<slug>/plan.md`  |
 | 3     | `/tasks`     | `specs/<NNN>-<slug>/tasks.md` |
-| 4     | `/implement` | le code                      |
+| 4     | `/implement` | le code                       |
 
 Les fonctionnalités `001` et `002` sont livrées et leurs specs servent
 d'exemples (`specs/`). Votre formateur vous indiquera la fonctionnalité `003`
